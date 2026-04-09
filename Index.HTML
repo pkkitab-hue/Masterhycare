@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureWash - Luxury Hand Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0891b2;
+            --primary-light: #22d3ee;
+            --secondary: #f0f9ff;
+            --accent: #0e7490;
+            --text: #164e63;
+            --white: #ffffff;
+            --bubble-1: rgba(34, 211, 238, 0.3);
+            --bubble-2: rgba(8, 145, 178, 0.2);
+            --bubble-3: rgba(14, 116, 144, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            overflow-x: hidden;
+            color: var(--text);
+        }
+
+        /* Animated Background Bubbles */
+        .bubbles-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            border-radius: 50%;
+            animation: rise 15s infinite ease-in;
+            opacity: 0.6;
+        }
+
+        .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; background: var(--bubble-1); animation-duration: 12s; animation-delay: 0s; }
+        .bubble:nth-child(2) { left: 20%; width: 20px; height: 20px; background: var(--bubble-2); animation-duration: 18s; animation-delay: 2s; }
+        .bubble:nth-child(3) { left: 35%; width: 50px; height: 50px; background: var(--bubble-3); animation-duration: 14s; animation-delay: 4s; }
+        .bubble:nth-child(4) { left: 50%; width: 30px; height: 30px; background: var(--bubble-1); animation-duration: 16s; animation-delay: 1s; }
+        .bubble:nth-child(5) { left: 65%; width: 25px; height: 25px; background: var(--bubble-2); animation-duration: 13s; animation-delay: 3s; }
+        .bubble:nth-child(6) { left: 80%; width: 45px; height: 45px; background: var(--bubble-3); animation-duration: 17s; animation-delay: 5s; }
+        .bubble:nth-child(7) { left: 90%; width: 35px; height: 35px; background: var(--bubble-1); animation-duration: 15s; animation-delay: 2s; }
+        .bubble:nth-child(8) { left: 5%; width: 15px; height: 15px; background: var(--bubble-2); animation-duration: 19s; animation-delay: 6s; }
+
+        @keyframes rise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-120vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-subtitle::before {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+            animation: expandWidth 2s ease infinite;
+        }
+
+        @keyframes expandWidth {
+            0%, 100% { width: 40px; }
+            50% { width: 60px; }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #64748b;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(8, 145, 178, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Hero Image/Animation */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bottle-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .bottle {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(224, 242, 254, 0.8) 100%);
+            border-radius: 60px 60px 40px 40px;
+            position: relative;
+            box-shadow: 
+                0 25px 50px -12px rgba(8, 145, 178, 0.25),
+                inset 0 -10px 30px rgba(255,255,255,0.8),
+                inset 0 10px 30px rgba(34, 211, 238, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.5);
+            overflow: hidden;
+        }
+
+        .bottle::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.3), transparent);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            background: linear-gradient(180deg, rgba(34, 211, 238, 0.6) 0%, rgba(8, 145, 178, 0.8) 100%);
+            border-radius: 0 0 35px 35px;
+            animation: wave 3s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .bottle-cap {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 50px;
+            background: linear-gradient(180deg, #0891b2 0%, #0e7490 100%);
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(8, 145, 178, 0.3);
+        }
+
+        .droplets {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .droplet {
+            position: absolute;
+            width: 10px;
+            height: 15px;
+            background: linear-gradient(180deg, rgba(34, 211, 238, 0.8), rgba(8, 145, 178, 0.6));
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: drop 3s ease-in infinite;
+        }
+
+        .droplet:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+        .droplet:nth-child(2) { left: 50%; top: 20%; animation-delay: 1s; }
+        .droplet:nth-child(3) { left: 80%; top: 40%; animation-delay: 2s; }
+
+        @keyframes drop {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: scale(1); }
+            100% { transform: translateY(200px) scale(0.5); opacity: 0; }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 120px 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(8, 145, 178, 0.1);
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: var(--text);
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(8, 145, 178, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            position: relative;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 120px 5%;
+            background: linear-gradient(180deg, transparent 0%, rgba(224, 242, 254, 0.5) 50%, transparent 100%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 40px 80px rgba(8, 145, 178, 0.2);
+        }
+
+        .product-image {
+            height: 350px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(224, 242, 254, 0.8));
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(8, 145, 178, 0.2);
+            animation: productFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes productFloat {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-15px) rotate(-5deg); }
+        }
+
+        .product-info {
+            padding: 40px;
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(8, 145, 178, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .product-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.3);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 120px 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary));
+            background-size: 200% 100%;
+            animation: gradientFlow 3s linear infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .step-number {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 30px rgba(8, 145, 178, 0.2);
+            border: 3px solid var(--primary-light);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1);
+            background: var(--primary);
+            color: white;
+        }
+
+        .step h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .step p {
+            color: #64748b;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 120px 5%;
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.5), rgba(186, 230, 253, 0.3));
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-carousel {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 60px;
+            border-radius: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-icon {
+            font-size: 4rem;
+            color: var(--primary-light);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .testimonial-role {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 150px 5%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin: 0 5%;
+            border-radius: 60px;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .cta-btn {
+            padding: 20px 50px;
+            background: white;
+            color: var(--primary);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 5% 40px;
+            background: var(--text);
+            color: white;
+            position: relative;
+            z-index: 1;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand .logo {
+            color: white;
+            -webkit-text-fill-color: white;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 15px;
+        }
+
+        .footer-column a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-light);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .hero-description {
+                margin: 0 auto 40px;
+            }
+
+            .bottle-container {
+                width: 300px;
+                height: 400px;
+            }
+
+            .steps-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .steps-container::before {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Cursor Effect */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            background: rgba(8, 145, 178, 0.1);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <!-- Animated Background Bubbles -->
+    <div class="bubbles-container">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">PureWash</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#how-it-works">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-subtitle">Premium Hand Care</div>
+                <h1 class="hero-title">Experience the Art of Clean</h1>
+                <p class="hero-description">Discover our luxurious collection of hand washes crafted with natural ingredients. Transform your daily routine into a spa-like experience with every wash.</p>
+                <div class="cta-buttons">
+                    <a href="#products" class="btn btn-primary">Explore Collection →</a>
+                    <a href="#how-it-works" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="bottle-container">
+                    <div class="bottle-cap"></div>
+                    <div class="bottle">
+                        <div class="liquid"></div>
+                    </div>
+                    <div class="droplets">
+                        <div class="droplet"></div>
+                        <div class="droplet"></div>
+                        <div class="droplet"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header reveal">
+            <span class="section-tag">Why Choose Us</span>
+            <h2 class="section-title">Pure Ingredients, Pure Results</h2>
+            <p class="section-subtitle">We believe in the power of nature combined with modern science to deliver the best hand care experience.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card reveal">
+                <div class="feature-icon">🌿</div>
+                <h3>100% Natural</h3>
+                <p>Made with organic botanical extracts and essential oils. No harsh chemicals, sulfates, or artificial fragrances.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">💧</div>
+                <h3>Deep Hydration</h3>
+                <p>Our unique formula locks in moisture while cleansing, leaving your hands soft and nourished after every wash.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">♻️</div>
+                <h3>Eco-Friendly</h3>
+                <p>Sustainable packaging made from recycled materials. Refillable bottles to reduce plastic waste.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">✨</div>
+                <h3>Luxury Scents</h3>
+                <p>Carefully curated fragrances that transform hand washing into an aromatherapy experience.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🛡️</div>
+                <h3>Gentle Protection</h3>
+                <p>pH-balanced formula protects your skin's natural barrier while effectively removing germs and impurities.</p>
+            </div>
+            <div class="feature-card reveal">
+                <div class="feature-icon">🎁</div>
+                <h3>Perfect Gift</h3>
+                <p>Elegant packaging makes our hand wash sets the perfect present for any occasion.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="section-header reveal">
+            <span class="section-tag">Our Collection</span>
+            <h2 class="section-title">Signature Scents</h2>
+            <p class="section-subtitle">Choose from our carefully crafted range of luxury hand washes.</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card reveal">
+                <div class="product-image"></div>
+                <div class="product-info">
+                    <span class="product-tag">Bestseller</span>
+                    <h3 class="product-title">Ocean Breeze</h3>
+                    <div class="product-price">$24.00</div>
+                    <p class="product-description">Refreshing blend of sea salt, driftwood, and coastal botanicals. Like a morning walk on the beach.</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card reveal">
+                <div class="product-image" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);"></div>
+                <div class="product-info">
+                    <span class="product-tag">New Arrival</span>
+                    <h3 class="product-title">Citrus Grove</h3>
+                    <div class="product-price">$26.00</div>
+                    <p class="product-description">Energizing mix of Italian lemon, bergamot, and verbena. A burst of sunshine in every pump.</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-card reveal">
+                <div class="product-image" style="background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);"></div>
+                <div class="product-info">
+                    <span class="product-tag">Limited Edition</span>
+                    <h3 class="product-title">Lavender Fields</h3>
+                    <div class="product-price">$28.00</div>
+                    <p class="product-description">Calming French lavender with notes of chamomile and vanilla. Pure relaxation for your senses.</p>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-header reveal">
+            <span class="section-tag">Simple Process</span>
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Three simple steps to transform your hand care routine.</p>
+        </div>
+        <div class="steps-container">
+            <div class="step reveal">
+                <div class="step-number">01</div>
+                <h3>Choose Your Scent</h3>
+                <p>Browse our collection and select the perfect fragrance that matches your personality and mood.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step-number">02</div>
+                <h3>We Deliver</h3>
+                <p>Receive your luxury hand wash in eco-friendly packaging within 2-3 business days.</p>
+            </div>
+            <div class="step reveal">
+                <div class="step-number">03</div>
+                <h3>Enjoy Clean</h3>
+                <p>Transform your daily hand washing into a luxurious ritual you'll look forward to.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-header reveal">
+            <span class="section-tag">Testimonials</span>
+            <h2 class="section-title">Loved by Thousands</h2>
+        </div>
+        <div class="testimonial-carousel reveal">
+            <div class="testimonial-card">
+                <div class="quote-icon">"</div>
+                <p class="testimonial-text">I've never been excited about hand soap before, but PureWash changed that. The Ocean Breeze scent is absolutely divine and my hands have never felt softer!</p>
+                <div class="testimonial-author">Sarah Mitchell</div>
+                <div class="testimonial-role">Interior Designer</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Elevate Your Routine?</h2>
+            <p class="cta-subtitle">Join 50,000+ happy customers who've made the switch to luxury hand care.</p>
+            <a href="#products" class="cta-btn">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo">PureWash</div>
+                <p>Elevating everyday moments through luxury hand care. Crafted with love, delivered with care.</p>
+                <div class="social-links">
+                    <a href="#">f</a>
+                    <a href="#">in</a>
+                    <a href="#">ig</a>
+                    <a href="#">tw</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">All Products</a></li>
+                    <li><a href="#">Gift Sets</a></li>
+                    <li><a href="#">Refills</a></li>
+                    <li><a href="#">Accessories</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PureWash. All rights reserved. Made with 💙 for clean hands.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const follower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                follower.style.left = e.clientX - 10 + 'px';
+                follower.style.top = e.clientY - 10 + 'px';
+            }, 100);
+        });
+
+        // Hover effect on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .feature-card, .product-card');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                follower.style.transform = 'scale(1.5)';
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                follower.style.transform = 'scale(1)';
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add to cart animation
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const originalText = this.textContent;
+                this.textContent = '✓ Added!';
+                this.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    this.textContent = originalText;
+                    this.style.background = '';
+                }, 2000);
+            });
+        });
+
+        // Parallax effect for hero bottle
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const bottle = document.querySelector('.bottle-container');
+            if (bottle) {
+                bottle.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
